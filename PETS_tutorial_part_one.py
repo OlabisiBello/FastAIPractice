@@ -13,4 +13,4 @@ pets = DataBlock(
     batch_tfms = aug_transforms(size = 224, min_scale = 0.75)
 )
 dls = pets.dataloaders(path/'images')
-dls.show_batch(max_n=4, figsize = (10,15))
+dls.show_batch(max_n=4, figsize = (6,9))
