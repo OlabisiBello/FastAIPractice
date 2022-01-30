@@ -3,7 +3,6 @@ from fastai.basics import *
 from fastai.vision.all import *
 from fastai.callback.all import *
 path = untar_data(URLs.PETS)
-path.ls()
 pets = DataBlock(
     blocks = (ImageBlock, CategoryBlock),
     get_items = get_image_files,
