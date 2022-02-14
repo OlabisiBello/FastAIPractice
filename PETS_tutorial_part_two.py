@@ -20,7 +20,7 @@ model = cnn_learner(dls, resnet34, metrics = error_rate)
 model.fit_one_cycle(4)
 model.unfreeze()
 model.lr_find()
-learn.fit(4, lr_max = slice (6e-5,2e-4)) #replace numbers with range the your valley in your lr_find plot
+model.fit_one_cycle(4, lr_max = slice (6e-5,2e-4)) #replace numbers with range the your valley in your lr_find plot
 model.save("perfecto")
 model.recorder.plot_loss()
 results = ClassificationInterpretation.from_learner(model)
