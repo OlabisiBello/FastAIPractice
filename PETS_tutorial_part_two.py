@@ -16,7 +16,7 @@ dls = pets.dataloaders(path/'images')
 dls.show_batch(max_n=4, figsize = (6,9))
 """
 
-model = cnn_learner(dls, resnet34, metrics = error rate)
+model = cnn_learner(dls, resnet34, metrics = error_rate)
 model.fit_one_cycle(4)
 model.unfreeze()
 model.lr_find()
