@@ -1,0 +1,27 @@
+##For conciseness, I skipped the several learning rates attempts that I included in the blog post.
+
+!pip install fastai -q --upgrade
+!conda install -c pytorch magma-cuda110 -y
+from fastai.basics import *
+from fastai.vision.all import *
+from fastai.callback.all import *
+path = Path ('../input/intel-image-classification')
+path.ls()
+data = ImageDataLoaders.from_folder(path,train = 'seg_train', valid = 'seg_test', seed= 20, item_tfms = Resize(460), batch_tfms= aug_transforms(size = 224, min_scale = 0.75))
+data.show_batch(max_n=9)
+model = cnn_learner(data, resnet34, metrics = error_rate, path = Path ('../kaggle/working'))
+model.fit_one_cycle(4)
+model.unfreeze()
+model.lr_find()
+model.fit_one_cycle(4, lr_max = slice (1e-7,9e-7))
+model.save("perfecto")
+model.recorder.plot_loss()
+results = ClassificationInterpretation.from_learner(model)
+results.plot_confusion_matrix(figsize=(12,12), dpi=60)
+results.plot_top_losses(9, figsize = (16, 16))
+
+"""
+Note if you get some blank graphs as a result for line 20 (the plot top losses), use the solution codes in this post:
+https://forums.fast.ai/t/plot-top-losses-problem/92015/12
+
+"""
